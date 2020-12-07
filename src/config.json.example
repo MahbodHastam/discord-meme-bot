@@ -1,0 +1,5 @@
+{
+	"BOT_TOKEN": "YOUR BOT TOKEN",
+	"SRC_DIR": "src/",
+	"PREFIX": "/"
+}
