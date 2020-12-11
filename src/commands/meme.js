@@ -16,7 +16,7 @@ module.exports = {
   },
   sendMemes(message, args) {
     const fetch = require("node-fetch");
-    const counter = args[1] ?? 1;
+    const counter = args[0] ?? 1;
     for (j = 0; j < counter; j++) {
       let i = Math.floor((Math.random() * 100) / 2);
       fetch(this.url(i))
