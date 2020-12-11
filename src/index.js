@@ -7,6 +7,7 @@ client.commands = new Discord.Collection();
 const commandFiles = fs
   .readdirSync(`./${SRC_DIR}commands`)
   .filter((file) => file.endsWith("js"));
+let args;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -23,8 +24,8 @@ for (const file of commandFiles) {
 
 client.on("message", (message) => {
   if (!message.content.startsWith(PREFIX) || message.author.bot) return;
-  const args = message.content.slice(PREFIX.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase();
+  args = message.content.slice(PREFIX.length).trim().split(/ +/);
+  const command = args.toLowerCase();
 
   if (!client.commands.has(command)) return;
 
@@ -33,5 +34,15 @@ client.on("message", (message) => {
   } catch (error) {
     console.error(error);
     message.reply(`Server error! Please tell the developer.`);
+  }
+});
+
+client.on("messageReactionAdd", (reaction, user) => {
+  // console.log(reaction.toJSON());
+  if (!reaction.me) {
+    // console.log(reaction.emoji.toString());
+    if (reaction.emoji.toString() === client.commands.get('meme').emojis.again) {
+      client.commands.get('meme').sendMemes(reaction.message, args);
+    }
   }
 });

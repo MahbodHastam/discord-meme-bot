@@ -1,6 +1,6 @@
 module.exports = {
   name: "meme",
-  description: "send a random meme from reddit",
+  description: "send random memes from reddit",
   emojis: {
     joy: "😂",
     disslike: "👎",
@@ -11,25 +11,12 @@ module.exports = {
   },
   execute(message, args) {
     // console.log(args);
-    const client = message.client;
+    // const client = message.client;
     this.sendMemes(message, args);
-    client.on("messageReactionAdd", (reaction, user) => {
-      // console.log(reaction.toJSON());
-      if (!reaction.me) {
-        // console.log(reaction.emoji.toString());
-        switch (reaction.emoji.toString()) {
-          case this.emojis.again:
-            this.sendMemes(message, args);
-            break;
-          default:
-            break;
-        }
-      }
-    });
   },
   sendMemes(message, args) {
     const fetch = require("node-fetch");
-    const counter = args[0] ?? 1;
+    const counter = args[1] ?? 1;
     for (j = 0; j < counter; j++) {
       let i = Math.floor((Math.random() * 100) / 2);
       fetch(this.url(i))
